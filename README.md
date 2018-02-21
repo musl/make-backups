@@ -1,5 +1,5 @@
 # make-backups
-A bare-bones backup tool for ubuntu made with GNU make.
+A bare-bones backup tool for debian-based linuxes made with GNU make.
 
 ## Setup
 - Install duplicity and gpg.
