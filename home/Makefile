@@ -1,6 +1,7 @@
-KEY    := 1BE1490D6CB14770
-VOLUME := SDCARD
-DEST   := $(CURDIR)/$(USER)
+KEY    	  := 1BE1490D6CB14770
+VOLUME 	  := SDCARD
+DEST   	  := $(CURDIR)/$(USER)
+DUPLICITY := $(shell which duplicity)
 
 .PHONY: all backup
 
@@ -10,7 +11,7 @@ $(DEST):
 	mkdir -p $(DEST)
 
 backup: $(DEST)
-	duplicity \
+	$(DUPLICITY) \
 		-v 8 \
 		--exclude $(HOME)/.local/share/keybase/fs \
 		--exclude $(HOME)/.cache \

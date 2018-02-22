@@ -1,6 +1,9 @@
-ARCHIVE    := $(CURDIR)/apt-backup-$(shell date "+%Y%m%d-%H%M%S.tar.bz2")
 KEYS       := apt-key-backup.asc
 SELECTIONS := dpkg-selections
+ARCHIVE    := $(CURDIR)/apt-backup-$(shell date "+%Y%m%d-%H%M%S.tar.bz2")
+
+APT_KEY    := $(shell which apt-key)
+DPKG       := $(shell which dpkg)
 
 .PHONY: all clean
 
@@ -12,14 +15,14 @@ ifeq ("$(shell id -u)", "0")
 endif
 
 clean:
-	rm -f $(KEYS) $(SELECTIONS)
+	/bin/rm -f $(KEYS) $(SELECTIONS)
 
 $(KEYS):
-	apt-key exportall 2>/dev/null > $@
+	$(APT_KEY) exportall 2>/dev/null > $@
 
 $(SELECTIONS):
-	dpkg --get-selections > $@
+	$(DPKG) --get-selections > $@
 
 $(ARCHIVE): $(KEYS) $(SELECTIONS)
-	tar cjvf $(ARCHIVE) /etc/apt/sources.list* $?
+	/bin/tar cjvf $(ARCHIVE) /etc/apt/sources.list* $?
 
